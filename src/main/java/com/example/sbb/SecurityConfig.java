@@ -2,6 +2,7 @@ package com.example.sbb;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -12,6 +13,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -21,10 +23,20 @@ public class SecurityConfig {
                 .csrf().ignoringRequestMatchers(
                         new AntPathRequestMatcher("/h2-console/**"))
                 .and()
-                .headers()
-                .addHeaderWriter(new XFrameOptionsHeaderWriter(
+                    .headers()
+                    .addHeaderWriter(new XFrameOptionsHeaderWriter(
                         XFrameOptionsHeaderWriter.XFrameOptionsMode.SAMEORIGIN))
+                .and()
+                    .formLogin()
+                    .loginPage("/user/login")
+                    .defaultSuccessUrl("/")
+                .and()
+                    .logout()
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/user/logout"))
+                    .logoutSuccessUrl("/")
+                    .invalidateHttpSession(true)    // 사용자 세션 삭제 처리
         ;
+
         return http.build();
     }
 
