@@ -11,9 +11,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService {
 
+    // DI
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+    // User 생성
     public SiteUser create(String username, String email, String password) {
         SiteUser user = new SiteUser();
         user.setUsername(username);
@@ -23,6 +25,7 @@ public class UserService {
         return user;
     }
 
+    // User 조회
     public SiteUser getUser(String username) {
         Optional<SiteUser> siteUser = this.userRepository.findByUsername(username);
 
