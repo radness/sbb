@@ -1,19 +1,20 @@
 package com.example.sbb.question;
 
-import com.example.sbb.user.SiteUser;
-import lombok.RequiredArgsConstructor;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
 import com.example.sbb.DataNotFoundException;
+import com.example.sbb.user.SiteUser;
+
+import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @Service
@@ -33,24 +34,24 @@ public class QuestionService {
         if (question.isPresent()) {
             return question.get();
         } else {
-            throw new DataNotFoundException("question not found.");
+            throw new DataNotFoundException("question not found");
         }
     }
 
-    public void create(String subject, String contnet, SiteUser user) {
+    public void create(String subject, String content, SiteUser user) {
         Question q = new Question();
         q.setSubject(subject);
-        q.setContent(contnet);
+        q.setContent(content);
         q.setCreateDate(LocalDateTime.now());
         q.setAuthor(user);
         this.questionRepository.save(q);
     }
 
-    public void modify(Question q, String subject, String content) {
-        q.setSubject(subject);
-        q.setContent(content);
-        q.setModifyDate(LocalDateTime.now());
-        this.questionRepository.save(q);
+    public void modify(Question question, String subject, String content) {
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setModifyDate(LocalDateTime.now());
+        this.questionRepository.save(question);
     }
 
     public void delete(Question question) {

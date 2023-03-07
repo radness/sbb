@@ -29,7 +29,6 @@ public class Answer {
     private SiteUser author;
 
     private LocalDateTime modifyDate;
-
     @ManyToMany
     private Set<SiteUser> voter;
 }
