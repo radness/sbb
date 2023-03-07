@@ -19,7 +19,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserSecurityService implements UserDetailsService {
-
+    // 스프링 시큐리티가 제공하는 UserDetailsService 인터페이스 구현
     private final UserRepository userRepository;
 
     // 사용자명으로 비밀번호를 조회하여 리턴하는 서비스
