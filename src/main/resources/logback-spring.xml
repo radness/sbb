@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<!-- appender에서 콘솔에 출력되는 형식을 지정한다. -->
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] - %message - %logger{5}:%method:%line%n</pattern>
+		</encoder>
+	</appender>
+
+	<appender name="FILE_AUDIT"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${LOG_HOME}/app.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<fileNamePattern>${LOG_HOME}/app.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+			<cleanHistoryOnStart>true</cleanHistoryOnStart>
+			<totalSizeCap>1GB</totalSizeCap>
+			<maxHistory>30</maxHistory>
+			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+				<maxFileSize>100MB</maxFileSize>
+			</timeBasedFileNamingAndTriggeringPolicy>
+		</rollingPolicy>
+		<encoder>
+            <pattern>%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%thread] - %message - %logger{5}:%method:%line%n</pattern>
+        </encoder>
+	</appender>
+
+    <root level="INFO">
+		<appender-ref ref="FILE_AUDIT" />
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>

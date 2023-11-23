@@ -47,5 +47,6 @@ spring:
       enabled: true
 
 logging:
-  level:
-    web: INFO
+  confing: classpath:logback-spring.xml
+#  level:
+#    web: INFO
