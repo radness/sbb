@@ -2,6 +2,8 @@ server:
   port: 8081
 
 spring:
+  main:
+    allow-bean-definition-overriding: true
   thymeleaf:
     cache: false
   prefix: file:src/main/resources/templates/
@@ -11,17 +13,24 @@ spring:
       enabled: true
       path: /h2-console
   datasource:
-    url: jdbc:h2:~/local
-    driverClassName: org.h2.Driver
-    username: sa
-    password:
+    #h2
+#    url: jdbc:h2:~/local
+#    driverClassName: org.h2.Driver
+#    username: sa
+#    password:
+    #mysql
+    driverClassName: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/springbasic?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+    username: root
+    password: root
 # JPA
   jpa:
+    database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
       ddl-auto: update
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+      #dialect: org.hibernate.dialect.H2Dialect
         show_sql: true
         format_sql: true
       jakarta:
@@ -30,7 +39,13 @@ spring:
             mode: NONE
     logging.level:
       org.hibernate.SQL: debug
-    open-in-view: false
+    open-in-view: true
+  devtools:
+    livereload:
+      enabled: true
+    restart:
+      enabled: true
+
 logging:
   level:
     web: INFO

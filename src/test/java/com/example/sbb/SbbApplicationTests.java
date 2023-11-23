@@ -1,6 +1,10 @@
 package com.example.sbb;
 
 import com.example.sbb.question.QuestionService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Persistence;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +22,15 @@ class SbbApplicationTests {
 			String content = "내용무";
 			this.questionService.create(subject, content, null);
 		}
+	}
+
+	@Test
+	void testHibernateSave() {
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("my-persistence");
+		EntityManager em = emf.createEntityManager();
+		EntityTransaction tx = em.getTransaction();
+		tx.begin();
+
 	}
 
 }
